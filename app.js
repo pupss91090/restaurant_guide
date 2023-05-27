@@ -37,6 +37,7 @@ app.engine('handlebars',exphbs({defaultLayout: 'main'}))
 app.set('view engine','handlebars')
 
 const restaurantInfo = require('./restaurant.json')
+const Restaurant = require('./models/restaurant')
 
 app.use(express.static('public'))
 
@@ -49,16 +50,32 @@ app.use(express.static('public'))
 // 將修改特定一家餐廳的資料更新至資料庫 post /restaurant/id/edit > /restaurant/id
 // 刪除特定一家餐廳 post /restaurant/id/delete > /
 
+
+
+// 瀏覽所有餐廳 get /
 app.get('/',(req,res)=>{
-    console.log(restaurantInfo.results)
-    res.render('index',{restaurants: restaurantInfo.results})
+    Restaurant.find()
+    .lean()
+    .then(restaurants => res.render('index',{restaurants}))
+    .catch(error => console.error(error)) 
 })
 
-app.get('/restaurants/:restaurant_id',(req,res)=>{
-    console.log('request:',req.params.restaurant_id)
-    res.render('show',{theRestaurant: restaurantInfo.results[req.params.restaurant_id-1]})
-    console.log(restaurantInfo.results[req.params.restaurant_id])
+// 進入新增餐廳的表單 get /restaurant/new
+// 新增一家餐廳至資料庫 post /restaurant/new > /
+
+// 瀏覽一家餐廳的詳細資訊 get /restaurant/id
+app.get('/restaurants/:id',(req,res)=>{
+    const id = req.params.id
+    console.log('request:', id)
+    Restaurant.findById(id)
+    .lean()
+    .then( restaurant => res.render('show',{restaurant}))
+    .catch(error => console.error(error)) 
 })
+
+// 進入修改特定一家餐廳的表單 get /restaurant/id/edit
+// 將修改特定一家餐廳的資料更新至資料庫 post /restaurant/id/edit > /restaurant/id
+// 刪除特定一家餐廳 post /restaurant/id/delete > /
 
 app.get('/search',(req,res)=>{
     console.log('request:',req.query.keyword)
