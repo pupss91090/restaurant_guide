@@ -2,6 +2,7 @@
 // 使用者可以新增一家餐廳 
 // 使用者可以瀏覽一家餐廳的詳細資訊
 // 使用者可以瀏覽全部所有餐廳
+// 使用者可以依據名稱或餐廳類別搜尋餐廳
 // 使用者可以修改一家餐廳的資訊
 // 使用者可以刪除一家餐廳
 
@@ -45,7 +46,7 @@ app.use(express.static('public'))
 // 瀏覽所有餐廳 get /
 // 進入新增餐廳的表單 get /restaurant/new
 // 新增一家餐廳至資料庫 post /restaurant/new > /
-// 瀏覽一家餐廳的詳細資訊 get /restaurant/id
+// 依據名稱或餐廳類別搜尋餐廳 get /search
 // 進入修改特定一家餐廳的表單 get /restaurant/id/edit
 // 將修改特定一家餐廳的資料更新至資料庫 post /restaurant/id/edit > /restaurant/id
 // 刪除特定一家餐廳 post /restaurant/id/delete > /
@@ -77,15 +78,20 @@ app.get('/restaurants/:id',(req,res)=>{
 // 將修改特定一家餐廳的資料更新至資料庫 post /restaurant/id/edit > /restaurant/id
 // 刪除特定一家餐廳 post /restaurant/id/delete > /
 
+// 依據名稱或餐廳類別搜尋餐廳 get /search
 app.get('/search',(req,res)=>{
     console.log('request:',req.query.keyword)
     const keyword = req.query.keyword
     
-    const filteredRestaurant = restaurantInfo.results.filter((restaurant)=>{
-        return restaurant.name.toLowerCase().includes(keyword.toLowerCase()) || restaurant.category.toLowerCase().includes(keyword.toLowerCase())
+    Restaurant.find()
+    .lean()
+    .then(restaurants =>{
+        const filteredRestaurant = restaurants.filter((restaurant)=>{
+            return restaurant.name.toLowerCase().includes(keyword.toLowerCase()) || restaurant.category.toLowerCase().includes(keyword.toLowerCase())
+        })
+        res.render('index',{keyword: keyword, restaurants: filteredRestaurant}) 
     })
-    console.log(filteredRestaurant)
-    res.render('index',{keyword: keyword, restaurants: filteredRestaurant})
+    .catch(error => console.error(error))
 })
 
 
