@@ -1,0 +1,79 @@
+<head>
+    <link rel="stylesheet" href="/stylesheets/show.css">
+</head>
+
+<h1 class="mb-1 restaurant-show-title">口袋名單更新了嗎？！</h1>
+<div class="container">
+
+    <form method="POST" action="/restaurant/{{restaurant._id}}/edit">
+        <div class="col-12 col-md-6 mx-auto">
+            {{!-- <input type="hidden" name="_id" value="3487"> --}}
+            <p class="mb-1">
+                <span class="text-secondary">
+                    <i class="fas fa-utensils pr-2"></i>
+                    餐廳名稱：
+                </span>
+                <input type="text" name="name" value="{{restaurant.name}}" required>
+            </p>
+            <p class="mb-1">
+                <span class="text-secondary">
+                    <i class="fas fa-utensils pr-2"></i>
+                    類別：
+                </span>
+                <input type="text" name="category" size="20" value="{{restaurant.category}}" required>
+            </p>
+
+            <p class="mb-1">
+                <span class="text-secondary">
+                    <i class="fas fa-map-marker-alt pr-2"></i>
+                    地址：
+                </span>
+                <input type="text" name="location" size="40" value="{{restaurant.location}}" required>
+            </p>
+
+            <p class="mb-1">
+                <span class="text-secondary">
+                    <i class="fas fa-map-marker-alt pr-2"></i>
+                    Google地圖連結：
+                </span>
+                <input type="url" name="google_map" size="40" value="{{restaurant.google_map}}" required>
+            </p>
+
+            <p class="mb-1">
+                <span class="text-secondary">
+                    <i class="fas fa-mobile-alt pr-2"></i>
+                    電話：
+                </span>
+                <input type="text" name="phone" size="20" value="{{restaurant.phone}}" required>
+            </p>
+
+            <p class="mb-1">
+                <span class="text-secondary">
+                    <i class="fas fa-mobile-alt pr-2"></i>
+                    餐廳介紹、特色描述：
+                </span>
+                <input type="text" name="description" size="40" maxlength="200" value="{{restaurant.description}}"
+                    required>
+            </p>
+
+            <p class="mb-1">
+                <span class="text-secondary">
+                    <i class="fas fa-mobile-alt pr-2"></i>
+                    整體評分（0.0~5.0）：
+                </span>
+                <input type="number" name="rating" min="0" max="5" step="0.1" value="{{restaurant.rating}}" required>
+            </p>
+
+            <p class="mb-1">
+                <span class="text-secondary">
+                    <i class="fas fa-mobile-alt pr-2"></i>
+                    圖片網址：
+                </span>
+                <input type="url" name="image" size="40" value="{{restaurant.image}}" required>
+            </p>
+            <p class="my-3">
+                <button type="submit" class="btn btn-warning">Save</button>
+            </p>
+        </div>
+    </form>
+</div>

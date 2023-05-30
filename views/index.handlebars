@@ -24,40 +24,43 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-10 col-12 mx-auto">
+      {{#unless keyword}}
+      <div class="mb-2 d-flex flex-row-reverse">
+        <button type="button" class="btn btn-secondary btn-sm end-0"><a href="./restaurant/new" class="text-reset"
+            style="text-decoration:none">Add New Restaurant</a></button>
+      </div>
+      {{/unless}}
       <div class="row row-cols-sm-3">
         {{#each restaurants}}
-        {{!-- <a href="/restaurants/{{this._id}}" class="text-secondary"> --}}
-          <div class="text-secondary">
-            <div class="card mb-3">
-              <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
-              <div class="card-body p-3">
-                <h6 class="card-title mb-1">{{this.name}}</h6>
+        <div class="text-secondary">
+          <div class="card mb-3">
+            <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
+            <div class="card-body p-3">
+              <h6 class="card-title mb-1">{{this.name}}</h6>
 
-                <div class="restaurant-category mb-1">
-                  <i class="fas fa-utensils pr-2"></i> {{this.category}}
-                </div>
-
-                <span class="badge badge-pill badge-danger text-bg-warning font-weight-normal">
-                  {{this.rating}}
-                  <i class="fas fa-star fa-xs"></i>
-                </span>
-
+              <div class="restaurant-category mb-1">
+                <i class="fas fa-utensils pr-2"></i> {{this.category}}
               </div>
-              <div class="card-body p-3">
-                <button type="button" class="btn btn-light btn-sm"><a href="./restaurants/{{ this._id }}" class="text-reset" style="text-decoration:none">Detail</a></button>
-                <button type="button" class="btn btn-light btn-sm"><a href="./restaurants/{{ this._id }}/edit" class="text-reset" style="text-decoration:none">Edit</a></button>
-                <form method="POST" action="./restaurants/{{ this._id }}/delete" style="display:inline;">
-                  <button class="btn btn-danger btn-sm" type="submit">Delete</button>
-              </div>
+
+              <span class="badge badge-pill badge-danger text-bg-warning font-weight-normal">
+                {{this.rating}}
+                <i class="fas fa-star fa-xs"></i>
+              </span>
+
+            </div>
+            <div class="card-body p-3">
+              <button type="button" class="btn btn-light btn-sm"><a href="./restaurant/{{ this._id }}"
+                  class="text-reset" style="text-decoration:none">Detail</a></button>
+              <button type="button" class="btn btn-light btn-sm"><a href="./restaurant/{{ this._id }}/edit"
+                  class="text-reset" style="text-decoration:none">Edit</a></button>
+
+              <form method="POST" action="./restaurant/{{ this._id }}/delete" style="display:inline;">
+                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+              </form>
             </div>
           </div>
-          {{!--
-        </a> --}}
-
-        </form>
+        </div>
         {{/each}}
-
-
 
       </div>
     </div>
