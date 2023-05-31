@@ -24,12 +24,24 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-10 col-12 mx-auto">
-      {{#unless keyword}}
       <div class="mb-2 d-flex flex-row-reverse">
-        <button type="button" class="btn btn-secondary btn-sm end-0"><a href="./restaurant/new" class="text-reset"
+        <div class="dropdown">
+          <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+           Sort by
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/sort/name_ascend">A->Z</a></li>
+            <li><a class="dropdown-item" href="/sort/name_descend">Z->A</a></li>
+            <li><a class="dropdown-item" href="/sort/category">類別</a></li>
+            <li><a class="dropdown-item" href="/sort/location">地區</a></li>
+          </ul>
+        </div>
+        {{#unless keyword}}
+        <button type="button" class="btn btn-secondary btn-sm me-2"><a href="/restaurant/new" class="text-reset"
             style="text-decoration:none">Add New Restaurant</a></button>
+        {{/unless}}
       </div>
-      {{/unless}}
       <div class="row row-cols-sm-3">
         {{#each restaurants}}
         <div class="text-secondary">
