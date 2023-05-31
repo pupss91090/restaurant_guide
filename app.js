@@ -12,37 +12,42 @@ const port = 3000
 
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
-const mongoose = require('mongoose') // 載入 mongoose
+// const mongoose = require('mongoose') // 載入 mongoose
+const methodOverride = require('method-override')// 載入method-override
 
-// 加入這段 code, 僅在非正式環境時, 使用 dotenv
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config()
-}
+require('./config/mongoose')
+// // 加入這段 code, 僅在非正式環境時, 使用 dotenv
+// if (process.env.NODE_ENV !== 'production') {
+//     require('dotenv').config()
+// }
 
-// 設定連線到 mongoDB  
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-// 取得資料庫連線狀態
-const db = mongoose.connection
-// 連線異常
-db.on('error', () => {
-    console.log('mongodb error!')
-})
-// 連線成功
-db.once('open', () => {
-    console.log('mongodb connected!')
-})
+// // 設定連線到 mongoDB  
+// mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+// // 取得資料庫連線狀態
+// const db = mongoose.connection
+// // 連線異常
+// db.on('error', () => {
+//     console.log('mongodb error!')
+// })
+// // 連線成功
+// db.once('open', () => {
+//     console.log('mongodb connected!')
+// })
 
 
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
+const routes = require('./routes/index')
 const restaurantInfo = require('./restaurant.json')
 const Restaurant = require('./models/restaurant')
 const restaurant = require('./models/restaurant')
 
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
+app.use(routes)
 
 // //路由設計：
 // 瀏覽所有餐廳 get /
@@ -55,13 +60,13 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 
 
-// 瀏覽所有餐廳 get /
-app.get('/', (req, res) => {
-    Restaurant.find()
-        .lean()
-        .then(restaurants => res.render('index', { restaurants }))
-        .catch(error => console.error(error))
-})
+// // 瀏覽所有餐廳 get /
+// app.get('/', (req, res) => {
+//     Restaurant.find()
+//         .lean()
+//         .then(restaurants => res.render('index', { restaurants }))
+//         .catch(error => console.error(error))
+// })
 
 // 進入新增餐廳的表單 get /restaurant/new
 app.get('/restaurant/new', (req, res) => {
@@ -106,7 +111,7 @@ app.get('/restaurant/:id/edit', (req, res) => {
 })
 
 // 將修改特定一家餐廳的資料更新至資料庫 post /restaurant/id/edit > /restaurant/id
-app.post('/restaurant/:id/edit', (req, res) => {
+app.put('/restaurant/:id', (req, res) => {
     const id = req.params.id
     const restaurantEdit = req.body
 
@@ -128,7 +133,7 @@ app.post('/restaurant/:id/edit', (req, res) => {
 })
 
 // 刪除特定一家餐廳 post /restaurant/id/delete > /
-app.post('/restaurant/:id/delete', (req, res) => {
+app.delete('/restaurant/:id', (req, res) => {
     const id = req.params.id
 
     return Restaurant.findById(id)

@@ -5,7 +5,7 @@
 <h1 class="mb-1 restaurant-show-title">口袋名單更新了嗎？！</h1>
 <div class="container">
 
-    <form method="POST" action="/restaurant/{{restaurant._id}}/edit">
+    <form method="POST" action="/restaurant/{{restaurant._id}}?_method=PUT">
         <div class="col-12 col-md-6 mx-auto">
             {{!-- <input type="hidden" name="_id" value="3487"> --}}
             <p class="mb-1">
