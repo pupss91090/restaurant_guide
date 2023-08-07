@@ -5,7 +5,7 @@ const home = require('./modules/home')
 const restaurant = require('./modules/restaurant')
 const search = require('./modules/search')
 const users = require('./modules/users')
-
+const { authenticator } = require('../middleware/auth')  // 掛載 middleware
 // //路由設計：
 // 瀏覽所有餐廳 get /
 // 進入新增餐廳的表單 get /restaurant/new
@@ -16,8 +16,8 @@ const users = require('./modules/users')
 // 刪除特定一家餐廳 post /restaurant/id/delete > /
 
 router.use('/users',users)
-router.use('/',home)
-router.use('/restaurant',restaurant)
-router.use('/search',search)
+router.use('/restaurant',authenticator,restaurant)
+router.use('/search',authenticator,search)
+router.use('/',authenticator,home)
 
 module.exports = router
