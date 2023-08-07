@@ -23,9 +23,9 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
 const routes = require('./routes/index')
-const restaurantInfo = require('./restaurant.json')
+// const restaurantInfo = require('./restaurant.json')
 const Restaurant = require('./models/restaurant')
-const restaurant = require('./models/restaurant')
+// const restaurant = require('./models/restaurant')
 
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))

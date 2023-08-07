@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
     const keyword = req.query.keyword
 
     Restaurant.find()
+    // Restaurant.find({name:keyword})
         .lean()
         .then(restaurants => {
             const filteredRestaurant = restaurants.filter((restaurant) => {
@@ -16,6 +17,8 @@ router.get('/', (req, res) => {
             })
             res.render('index', { keyword: keyword, restaurants: filteredRestaurant })
         })
+        // .then(filteredRestaurant => res.render('index', { keyword: keyword, restaurants: filteredRestaurant }))
+        // // .then(restaurant => console.log(restaurant))
         .catch(error => console.error(error))
 })
 

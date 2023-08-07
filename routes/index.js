@@ -4,6 +4,7 @@ const router = express.Router()
 const home = require('./modules/home')
 const restaurant = require('./modules/restaurant')
 const search = require('./modules/search')
+const users = require('./modules/users')
 
 // //路由設計：
 // 瀏覽所有餐廳 get /
@@ -14,6 +15,7 @@ const search = require('./modules/search')
 // 將修改特定一家餐廳的資料更新至資料庫 post /restaurant/id/edit > /restaurant/id
 // 刪除特定一家餐廳 post /restaurant/id/delete > /
 
+router.use('/users',users)
 router.use('/',home)
 router.use('/restaurant',restaurant)
 router.use('/search',search)
