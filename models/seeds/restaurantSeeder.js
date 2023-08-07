@@ -16,7 +16,8 @@ db.once('open', () => {
     phone: resJsonItem[i].phone,
     google_map: resJsonItem[i].google_map,
     rating: resJsonItem[i].rating,
-    description: resJsonItem[i].description})
+    description: resJsonItem[i].description,
+  })
 }
 console.log('done!')
 })
