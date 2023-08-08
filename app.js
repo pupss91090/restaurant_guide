@@ -31,7 +31,7 @@ app.set('view engine', 'handlebars')
 
 //express-session
 app.use(session(
-    {secret: 'ThisIsMySecret',
+    {secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true}
   ))

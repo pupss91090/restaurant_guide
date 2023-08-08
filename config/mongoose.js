@@ -5,6 +5,7 @@ mongoose.set('useCreateIndex', true)
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
 }
+mongoose.set('strictQuery', false)
 
 // 設定連線到 mongoDB  
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
